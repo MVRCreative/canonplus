@@ -178,11 +178,7 @@
     display: flex !important;
 }
 
-/* Debug styles - temporarily add bright border to see slide boundaries */
-.swiper-slide.is-slider-main.reviews-small {
-    border: 2px solid #ff0000 !important; /* Red border for debugging */
-    box-sizing: border-box !important;
-}
+/* Debug styles removed - borders should be gone now */
 
 /* Optional: Scrollbar styling (if you want to use it) */
 .swiper-scrollbar {

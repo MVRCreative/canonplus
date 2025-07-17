@@ -161,10 +161,7 @@ div.swiper_section div.swiper div.swiper-wrapper div.swiper-slide.is-slider-main
     }
 }
 
-/* Debug border (remove this when working) */
-.swiper-slide.is-slider-main.reviews-small {
-    border: 2px solid #ff0000 !important;
-}
+/* Debug border removed */
 
 /* Additional insurance against Webflow interference */
 .swiper-slide.is-slider-main.reviews-small {
