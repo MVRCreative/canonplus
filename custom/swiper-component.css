@@ -41,22 +41,46 @@
     object-fit: cover;
 }
 
-/* Reviews Small Variant - Override Webflow styles */
-.swiper-slide.is-slider-main.reviews-small {
-    overflow: hidden;
-    width: 25%;
-    height: 12rem;
-    max-height: none;
-    max-width: none;
-    min-height: 18rem;
-    margin-right: 0px;
-    padding: 1rem;
-    justify-content: space-between;
-    flex: 1 1 0%;
-    border-radius: 1rem;
-    background-color: var(--_primitives---colors--neutral-darker);
-    opacity: 1 !important; /* Force visibility */
-    transform: none !important; /* Prevent hiding */
+/* HIGH SPECIFICITY OVERRIDE for Reviews Small Variant */
+.swiper_section .review_wrapper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small,
+.swiper_section .swiper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small {
+    /* Force proper dimensions */
+    width: 25% !important;
+    min-width: 300px !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 250px !important;
+    max-height: none !important;
+    
+    /* Force proper layout */
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 0 0 auto !important;
+    justify-content: space-between !important;
+    
+    /* Force proper spacing */
+    margin-right: 12px !important;
+    padding: 1.5rem !important;
+    
+    /* Force visibility */
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    
+    /* Force proper styling */
+    background-color: var(--_primitives---colors--neutral-darker) !important;
+    border-radius: 1rem !important;
+    overflow: visible !important;
+    
+    /* Ensure content is visible */
+    color: white !important;
+}
+
+/* Force content inside review slides to be visible */
+.swiper-slide.is-slider-main.reviews-small * {
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: inherit !important;
 }
 
 /* Ensure review wrapper behaves like swiper container */
@@ -79,44 +103,48 @@
     scrollbar-width: none;
 }
 
-/* Tablet Styles (991px and below) */
+/* Tablet Styles (991px and below) - More specific selectors */
 @media screen and (max-width: 991px) {
-    .swiper-slide.is-slider-main {
-        width: 30%;
-        max-height: 20.8rem;
+    .swiper_section .swiper-slide.is-slider-main {
+        width: 30% !important;
+        max-height: 20.8rem !important;
     }
     
-    .swiper-slide.is-slider-main.reviews-small {
-        width: 40%;
-        min-height: 23rem;
-        margin-right: 0px;
+    .swiper_section .swiper-slide.is-slider-main.reviews-small {
+        width: 40% !important;
+        min-width: 250px !important;
+        min-height: 230px !important;
+        margin-right: 12px !important;
     }
 }
 
-/* Mobile Landscape Styles (767px and below) */
+/* Mobile Landscape Styles (767px and below) - More specific selectors */
 @media screen and (max-width: 767px) {
-    .swiper-slide.is-slider-main {
-        overflow: hidden;
-        width: auto;
-        height: auto;
-        max-height: 14rem;
-        max-width: 9rem;
-        min-height: 0rem;
-        margin-right: 12px;
-        border-radius: 8px;
+    .swiper_section .swiper-slide.is-slider-main {
+        overflow: hidden !important;
+        width: auto !important;
+        height: auto !important;
+        max-height: 14rem !important;
+        max-width: 9rem !important;
+        min-height: 0rem !important;
+        margin-right: 12px !important;
+        border-radius: 8px !important;
     }
     
-    .swiper-slide.is-slider-main.reviews-small {
-        width: auto;
-        max-width: 17rem;
-        min-height: 16rem;
+    .swiper_section .swiper-slide.is-slider-main.reviews-small {
+        width: auto !important;
+        max-width: 280px !important;
+        min-width: 250px !important;
+        min-height: 200px !important;
+        margin-right: 12px !important;
     }
 }
 
-/* Mobile Portrait Styles (479px and below) */
+/* Mobile Portrait Styles (479px and below) - More specific selectors */
 @media screen and (max-width: 479px) {
-    .swiper-slide.is-slider-main.reviews-small {
-        max-width: 75%;
+    .swiper_section .swiper-slide.is-slider-main.reviews-small {
+        max-width: 75% !important;
+        min-width: 200px !important;
     }
 }
 
@@ -148,6 +176,12 @@
     transform: none !important;
     visibility: visible !important;
     display: flex !important;
+}
+
+/* Debug styles - temporarily add bright border to see slide boundaries */
+.swiper-slide.is-slider-main.reviews-small {
+    border: 2px solid #ff0000 !important; /* Red border for debugging */
+    box-sizing: border-box !important;
 }
 
 /* Optional: Scrollbar styling (if you want to use it) */
