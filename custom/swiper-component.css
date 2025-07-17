@@ -180,29 +180,6 @@
 
 /* Debug styles removed - borders should be gone now */
 
-/* NUCLEAR OVERRIDE: Remove ANY red borders from ANY swiper slides */
-.swiper-slide,
-.swiper-slide.swiper-slide-visible,
-.swiper-slide.swiper-slide-active,
-.swiper-slide.is-slider-main,
-.swiper-slide.audio_card,
-div.swiper-slide,
-[class*="swiper-slide"] {
-    border: none !important;
-    border: 0 !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* Also target the image inside if it has red borders */
-.show_card_image,
-.swiper-slide img,
-.swiper-slide .show_card_image {
-    border: none !important;
-    border: 0 !important;
-    outline: none !important;
-}
-
 /* Optional: Scrollbar styling (if you want to use it) */
 .swiper-scrollbar {
     background: rgba(0, 0, 0, 0.1);
