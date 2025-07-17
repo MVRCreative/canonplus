@@ -1,0 +1,198 @@
+/* Swiper Component Styles - Functionality Only */
+
+
+
+/* Core Swiper Setup */
+.swiper,
+.review_wrapper {  /* Added .review_wrapper for reviews section */
+    overflow: visible; /* Allow content to extend beyond container */
+}
+
+.swiper-wrapper {
+    /* Let Webflow handle alignment and gaps */
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex; /* Ensure flex display for manual layout */
+}
+
+/* Essential Swiper Slide Properties */
+.swiper-slide {
+    width: 20rem;
+    height: 30rem;
+    flex-shrink: 0; /* Prevent slides from shrinking */
+    pointer-events: auto; /* Ensure interactions work */
+    
+    /* Make slides visible by default - remove opacity: 0 */
+    opacity: 1;  /* Changed from 0 to 1 */
+    transform: translateY(0); /* Changed from 50px to 0 */
+}
+
+/* Main Slider Slide Styles */
+.swiper-slide.is-slider-main {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    width: 20%;
+    max-width: 12rem;
+    min-height: 17rem;
+    margin-right: 12px;
+    flex-direction: column;
+    flex: 0 0 auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/* Reviews Small Variant - Override Webflow styles */
+.swiper-slide.is-slider-main.reviews-small {
+    overflow: hidden;
+    width: 25%;
+    height: 12rem;
+    max-height: none;
+    max-width: none;
+    min-height: 18rem;
+    margin-right: 0px;
+    padding: 1rem;
+    justify-content: space-between;
+    flex: 1 1 0%;
+    border-radius: 1rem;
+    background-color: var(--_primitives---colors--neutral-darker);
+    opacity: 1 !important; /* Force visibility */
+    transform: none !important; /* Prevent hiding */
+}
+
+/* Ensure review wrapper behaves like swiper container */
+.review_wrapper .swiper-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+    gap: 0; /* No gap, use margin on slides */
+}
+
+/* Hide scrollbar for cleaner look */
+.review_wrapper .swiper-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.review_wrapper .swiper-wrapper {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Tablet Styles (991px and below) */
+@media screen and (max-width: 991px) {
+    .swiper-slide.is-slider-main {
+        width: 30%;
+        max-height: 20.8rem;
+    }
+    
+    .swiper-slide.is-slider-main.reviews-small {
+        width: 40%;
+        min-height: 23rem;
+        margin-right: 0px;
+    }
+}
+
+/* Mobile Landscape Styles (767px and below) */
+@media screen and (max-width: 767px) {
+    .swiper-slide.is-slider-main {
+        overflow: hidden;
+        width: auto;
+        height: auto;
+        max-height: 14rem;
+        max-width: 9rem;
+        min-height: 0rem;
+        margin-right: 12px;
+        border-radius: 8px;
+    }
+    
+    .swiper-slide.is-slider-main.reviews-small {
+        width: auto;
+        max-width: 17rem;
+        min-height: 16rem;
+    }
+}
+
+/* Mobile Portrait Styles (479px and below) */
+@media screen and (max-width: 479px) {
+    .swiper-slide.is-slider-main.reviews-small {
+        max-width: 75%;
+    }
+}
+
+/* Prevent swiper interference with layout */
+.swiper {
+    isolation: isolate;
+}
+
+/* Hide default Swiper navigation (use Webflow buttons instead) */
+.swiper-button-next,
+.swiper-button-prev {
+    display: none;
+}
+
+/* GSAP Animation States - Only apply when Swiper is properly initialized */
+.swiper-initialized .swiper-slide.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.swiper-initialized .swiper-slide.animate-out {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+/* Force visibility for review slides specifically */
+.review_wrapper .swiper-slide {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    display: flex !important;
+}
+
+/* Optional: Scrollbar styling (if you want to use it) */
+.swiper-scrollbar {
+    background: rgba(0, 0, 0, 0.1);
+    height: 4px;
+    bottom: 0;
+}
+
+.swiper-scrollbar-drag {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+/* Optional: Pagination dots styling (if you want to use them) */
+.swiper-pagination {
+    position: relative;
+    margin-top: 20px;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background: #007bff;
+    transform: scale(1.2);
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    .swiper-scrollbar {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .swiper-scrollbar-drag {
+        background: rgba(255, 255, 255, 0.5);
+    }
+    
+    .swiper-pagination-bullet {
+        background: rgba(255, 255, 255, 0.3);
+    }
+} 

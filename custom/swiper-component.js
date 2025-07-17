@@ -13,17 +13,29 @@ function initializeSwipers() {
     }
     
     const swiperInstances = [];
-    const swiperContainers = document.querySelectorAll('.swiper');
     
-    if (swiperContainers.length === 0) {
-        console.warn('No .swiper elements found on the page.');
+    // Find all swiper containers (both .swiper and .review_wrapper)
+    const swiperContainers = document.querySelectorAll('.swiper');
+    const reviewWrappers = document.querySelectorAll('.review_wrapper');
+    
+    // Combine both types of containers
+    const allContainers = [...swiperContainers, ...reviewWrappers];
+    
+    if (allContainers.length === 0) {
+        console.warn('No .swiper or .review_wrapper elements found on the page.');
         return;
     }
     
-    console.log(`Found ${swiperContainers.length} swiper containers`);
+    console.log(`Found ${swiperContainers.length} swiper containers and ${reviewWrappers.length} review wrapper containers`);
     
-    swiperContainers.forEach((container, containerIndex) => {
+    allContainers.forEach((container, containerIndex) => {
         try {
+            // For review_wrapper elements, add the swiper class
+            if (container.classList.contains('review_wrapper')) {
+                container.classList.add('swiper');
+                console.log('✅ Added .swiper class to .review_wrapper element');
+            }
+            
             // Destroy existing swiper if it exists
             if (container.swiper) {
                 container.swiper.destroy(true, true);
@@ -32,6 +44,8 @@ function initializeSwipers() {
             // Check slide count for loop mode
             const slides = container.querySelectorAll('.swiper-slide');
             const enableLoop = slides.length >= 3; // Need at least 3 slides for smooth loop
+            
+            console.log(`Container ${containerIndex + 1}: Found ${slides.length} slides, loop enabled: ${enableLoop}`);
             
             const swiper = new Swiper(container, {
                 // Let Webflow control sizing - use 'auto' to respect your styles
@@ -77,7 +91,16 @@ function initializeSwipers() {
                 // Events
                 on: {
                     init: function() {
+                        console.log(`✅ Swiper ${containerIndex + 1} initialized successfully`);
                         this.update();
+                        
+                        // Make sure all slides are visible
+                        const slides = this.slides;
+                        slides.forEach(slide => {
+                            slide.style.opacity = '1';
+                            slide.style.transform = 'none';
+                            slide.style.visibility = 'visible';
+                        });
                     },
                     
                     // Prevent multiple swiper conflicts
@@ -105,6 +128,15 @@ function initializeSwipers() {
             
         } catch (error) {
             console.error(`Failed to initialize Swiper ${containerIndex + 1}:`, error);
+            
+            // Fallback: ensure slides are visible even without Swiper
+            const slides = container.querySelectorAll('.swiper-slide');
+            slides.forEach(slide => {
+                slide.style.opacity = '1';
+                slide.style.transform = 'none';
+                slide.style.visibility = 'visible';
+                slide.style.display = 'flex';
+            });
         }
     });
 
@@ -129,27 +161,34 @@ function initializeSwipers() {
                     // Mark as animated
                     container.setAttribute('data-animated', 'true');
                     
-                    // Animate slides in
-                    gsap.fromTo(slides, {
-                        opacity: 0,
-                        y: 30
-                    }, {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.6,
-                        ease: "power2.out",
-                        stagger: {
-                            amount: 0.4,
-                            from: "start"
-                        }
-                    });
+                    // Only animate if slides are not already visible
+                    const hiddenSlides = Array.from(slides).filter(slide => 
+                        parseFloat(window.getComputedStyle(slide).opacity) < 1
+                    );
+                    
+                    if (hiddenSlides.length > 0) {
+                        // Animate slides in
+                        gsap.fromTo(hiddenSlides, {
+                            opacity: 0,
+                            y: 30
+                        }, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            stagger: {
+                                amount: 0.4,
+                                from: "start"
+                            }
+                        });
+                    }
                     
                     observer.unobserve(container);
                 }
             });
         }, observerOptions);
 
-        swiperContainers.forEach(container => {
+        allContainers.forEach(container => {
             observer.observe(container);
         });
     }
