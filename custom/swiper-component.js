@@ -66,7 +66,7 @@ function initializeSwipers() {
                 // Smooth dragging
                 freeMode: {
                     enabled: true,
-                    sticky: true,
+                    sticky: false,
                     minimumVelocity: 0.02,
                 },
                 
