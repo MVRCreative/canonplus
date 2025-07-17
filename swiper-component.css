@@ -8,6 +8,8 @@
 .swiper-wrapper {
     /* Let Webflow handle alignment and gaps */
     transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Ensure we don't override Webflow's gap settings */
+    gap: inherit; 
 }
 
 /* Essential Swiper Slide Properties */
@@ -15,12 +17,12 @@
     flex-shrink: 0; /* Prevent slides from shrinking */
     pointer-events: auto; /* Ensure interactions work */
     
+    /* Ensure no extra margins interfere with Webflow's 1.5rem gap */
+    margin: 0;
+    
     /* GSAP Animation Initial State */
     opacity: 0;
     transform: translateY(50px);
-}
-
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 /* Prevent swiper interference with layout */
