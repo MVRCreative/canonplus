@@ -1,151 +1,26 @@
 /* Swiper Component Styles - Functionality Only */
 
-
-
 /* Core Swiper Setup */
-.swiper,
-.review_wrapper {  /* Added .review_wrapper for reviews section */
+.swiper {
     overflow: visible; /* Allow content to extend beyond container */
 }
 
 .swiper-wrapper {
     /* Let Webflow handle alignment and gaps */
     transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    display: flex; /* Ensure flex display for manual layout */
 }
 
 /* Essential Swiper Slide Properties */
 .swiper-slide {
-    width: 20rem;
-    height: 30rem;
     flex-shrink: 0; /* Prevent slides from shrinking */
     pointer-events: auto; /* Ensure interactions work */
     
-    /* Make slides visible by default - remove opacity: 0 */
-    opacity: 1;  /* Changed from 0 to 1 */
-    transform: translateY(0); /* Changed from 50px to 0 */
+    /* GSAP Animation Initial State */
+    opacity: 0;
+    transform: translateY(50px);
 }
 
-/* Main Slider Slide Styles */
-.swiper-slide.is-slider-main {
-    position: relative;
-    display: flex;
-    overflow: hidden;
-    width: 20%;
-    max-width: 12rem;
-    min-height: 17rem;
-    margin-right: 12px;
-    flex-direction: column;
-    flex: 0 0 auto;
-    border-radius: 4px;
-    object-fit: cover;
-}
-
-/* HIGH SPECIFICITY OVERRIDE for Reviews Small Variant */
-.swiper_section .review_wrapper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small,
-.swiper_section .swiper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small {
-    /* Force proper dimensions */
-    width: 25% !important;
-    min-width: 300px !important;
-    max-width: none !important;
-    height: auto !important;
-    min-height: 250px !important;
-    max-height: none !important;
-    
-    /* Force proper layout */
-    display: flex !important;
-    flex-direction: column !important;
-    flex: 0 0 auto !important;
-    justify-content: space-between !important;
-    
-    /* Force proper spacing */
-    margin-right: 12px !important;
-    padding: 1.5rem !important;
-    
-    /* Force visibility */
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    
-    /* Force proper styling */
-    background-color: var(--_primitives---colors--neutral-darker) !important;
-    border-radius: 1rem !important;
-    overflow: visible !important;
-    
-    /* Ensure content is visible */
-    color: white !important;
-}
-
-/* Force content inside review slides to be visible */
-.swiper-slide.is-slider-main.reviews-small * {
-    opacity: 1 !important;
-    visibility: visible !important;
-    color: inherit !important;
-}
-
-/* Ensure review wrapper behaves like swiper container */
-.review_wrapper .swiper-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto; /* Allow horizontal scrolling */
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
-    gap: 0; /* No gap, use margin on slides */
-}
-
-/* Hide scrollbar for cleaner look */
-.review_wrapper .swiper-wrapper::-webkit-scrollbar {
-    display: none;
-}
-
-.review_wrapper .swiper-wrapper {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-/* Tablet Styles (991px and below) - More specific selectors */
-@media screen and (max-width: 991px) {
-    .swiper_section .swiper-slide.is-slider-main {
-        width: 30% !important;
-        max-height: 20.8rem !important;
-    }
-    
-    .swiper_section .swiper-slide.is-slider-main.reviews-small {
-        width: 40% !important;
-        min-width: 250px !important;
-        min-height: 230px !important;
-        margin-right: 12px !important;
-    }
-}
-
-/* Mobile Landscape Styles (767px and below) - More specific selectors */
-@media screen and (max-width: 767px) {
-    .swiper_section .swiper-slide.is-slider-main {
-        overflow: hidden !important;
-        width: auto !important;
-        height: auto !important;
-        max-height: 14rem !important;
-        max-width: 9rem !important;
-        min-height: 0rem !important;
-        margin-right: 12px !important;
-        border-radius: 8px !important;
-    }
-    
-    .swiper_section .swiper-slide.is-slider-main.reviews-small {
-        width: auto !important;
-        max-width: 280px !important;
-        min-width: 250px !important;
-        min-height: 200px !important;
-        margin-right: 12px !important;
-    }
-}
-
-/* Mobile Portrait Styles (479px and below) - More specific selectors */
-@media screen and (max-width: 479px) {
-    .swiper_section .swiper-slide.is-slider-main.reviews-small {
-        max-width: 75% !important;
-        min-width: 200px !important;
-    }
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 /* Prevent swiper interference with layout */
@@ -159,48 +34,15 @@
     display: none;
 }
 
-/* GSAP Animation States - Only apply when Swiper is properly initialized */
-.swiper-initialized .swiper-slide.animate-in {
+/* GSAP Animation States */
+.swiper-slide.animate-in {
     opacity: 1;
     transform: translateY(0);
 }
 
-.swiper-initialized .swiper-slide.animate-out {
+.swiper-slide.animate-out {
     opacity: 0;
     transform: translateY(-50px);
-}
-
-/* Force visibility for review slides specifically */
-.review_wrapper .swiper-slide {
-    opacity: 1 !important;
-    transform: none !important;
-    visibility: visible !important;
-    display: flex !important;
-}
-
-/* Debug styles removed - borders should be gone now */
-
-/* NUCLEAR OVERRIDE: Remove ANY red borders from ANY swiper slides */
-.swiper-slide,
-.swiper-slide.swiper-slide-visible,
-.swiper-slide.swiper-slide-active,
-.swiper-slide.is-slider-main,
-.swiper-slide.audio_card,
-div.swiper-slide,
-[class*="swiper-slide"] {
-    border: none !important;
-    border: 0 !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* Also target the image inside if it has red borders */
-.show_card_image,
-.swiper-slide img,
-.swiper-slide .show_card_image {
-    border: none !important;
-    border: 0 !important;
-    outline: none !important;
 }
 
 /* Optional: Scrollbar styling (if you want to use it) */
