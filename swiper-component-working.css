@@ -1,0 +1,93 @@
+/* Swiper Component Styles - Functionality Only */
+
+/* Core Swiper Setup */
+.swiper {
+    overflow: visible; /* Allow content to extend beyond container */
+}
+
+.swiper-wrapper {
+    /* Let Webflow handle alignment and gaps */
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Essential Swiper Slide Properties */
+.swiper-slide {
+    flex-shrink: 0; /* Prevent slides from shrinking */
+    pointer-events: auto; /* Ensure interactions work */
+    
+    /* GSAP Animation Initial State */
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Prevent swiper interference with layout */
+.swiper {
+    isolation: isolate;
+}
+
+/* Hide default Swiper navigation (use Webflow buttons instead) */
+.swiper-button-next,
+.swiper-button-prev {
+    display: none;
+}
+
+/* GSAP Animation States */
+.swiper-slide.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.swiper-slide.animate-out {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+/* Optional: Scrollbar styling (if you want to use it) */
+.swiper-scrollbar {
+    background: rgba(0, 0, 0, 0.1);
+    height: 4px;
+    bottom: 0;
+}
+
+.swiper-scrollbar-drag {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+/* Optional: Pagination dots styling (if you want to use them) */
+.swiper-pagination {
+    position: relative;
+    margin-top: 20px;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background: #007bff;
+    transform: scale(1.2);
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    .swiper-scrollbar {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .swiper-scrollbar-drag {
+        background: rgba(255, 255, 255, 0.5);
+    }
+    
+    .swiper-pagination-bullet {
+        background: rgba(255, 255, 255, 0.3);
+    }
+} 
