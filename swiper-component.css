@@ -1,0 +1,130 @@
+/* Swiper Component Styles */
+
+/* Swiper Container */
+.swiper {
+    width: 100%;
+    height: auto;
+    padding: 0 40px;
+    overflow: visible;
+}
+
+.swiper-wrapper {
+    align-items: stretch;
+}
+
+/* Force your existing styles to override Swiper defaults */
+.swiper-slide {
+    width: 20rem !important;
+    height: 25rem !important;
+    margin-right: 0.5rem !important;
+    flex-shrink: 0 !important;
+    /* Initial state for GSAP animation */
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+/* Prevent swiper interference */
+.swiper {
+    isolation: isolate;
+    contain: layout;
+}
+
+/* Ensure smooth transitions */
+.swiper-wrapper {
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Fix for multiple swipers */
+.swiper-slide {
+    pointer-events: auto;
+}
+
+/* Hide navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+    display: none;
+}
+
+/* Responsive padding */
+@media (max-width: 768px) {
+    .swiper {
+        padding: 0 20px;
+    }
+}
+
+/* Additional styling for cards/content */
+.swiper-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.swiper-slide .card {
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: white;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.swiper-slide .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .swiper-slide .card {
+        background: #1a1a1a;
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    }
+    
+    .swiper-slide .card:hover {
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* Animation classes for GSAP integration */
+.swiper-slide.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.swiper-slide.animate-out {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+/* Scrollbar customization */
+.swiper-scrollbar {
+    background: rgba(0, 0, 0, 0.1);
+    height: 4px;
+    bottom: 0;
+}
+
+.swiper-scrollbar-drag {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+/* Pagination dots if needed */
+.swiper-pagination {
+    position: relative;
+    margin-top: 20px;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background: #007bff;
+    transform: scale(1.2);
+} 
