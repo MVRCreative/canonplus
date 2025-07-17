@@ -2,19 +2,51 @@
 // Let Webflow handle all sizing and spacing
 
 function initializeSwipers() {
+    // DEBUGGING: Check if our custom script is running
+    console.log('🔄 initializeSwipers() called');
+    console.log('🕒 Current time:', new Date().toLocaleTimeString());
+    
+    // DEBUGGING: Check if our CSS file is loaded
+    const cssCheck = getComputedStyle(document.documentElement).getPropertyValue('--swiper-custom-css-loaded');
+    if (cssCheck.trim() === 'true') {
+        console.log('✅ Custom swiper CSS is loaded');
+    } else {
+        console.error('❌ Custom swiper CSS is NOT loaded - check file path!');
+    }
+    
     // Check if Swiper is available
     if (typeof Swiper === 'undefined') {
-        console.error('Swiper library not loaded. Please check the CDN link.');
+        console.error('❌ Swiper library not loaded. Please check the CDN link.');
         return;
+    } else {
+        console.log('✅ Swiper library is available');
     }
     
     const swiperInstances = [];
     const swiperContainers = document.querySelectorAll('.swiper');
     
+    console.log(`🔍 Found ${swiperContainers.length} .swiper elements on page`);
+    
     if (swiperContainers.length === 0) {
-        console.warn('No .swiper elements found on the page.');
+        console.warn('⚠️ No .swiper elements found on the page.');
+        // Let's also check for common swiper class variations
+        const altElements = document.querySelectorAll('[class*="swiper"]');
+        console.log(`🔍 Found ${altElements.length} elements with "swiper" in class name:`, altElements);
         return;
     }
+    
+    // DEBUGGING: Check if our red dots should be visible
+    swiperContainers.forEach((container, index) => {
+        const slides = container.querySelectorAll('.swiper-slide');
+        console.log(`📦 Swiper ${index + 1}: Found ${slides.length} slides`);
+        
+        // Check if red dots are being applied
+        slides.forEach((slide, slideIndex) => {
+            const computedStyle = window.getComputedStyle(slide, '::before');
+            const beforeContent = computedStyle.getPropertyValue('content');
+            console.log(`🔴 Slide ${slideIndex + 1} ::before content:`, beforeContent);
+        });
+    });
     
     swiperContainers.forEach((container, containerIndex) => {
         try {

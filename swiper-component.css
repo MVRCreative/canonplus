@@ -1,5 +1,10 @@
 /* Swiper Component Styles - Functionality Only */
 
+/* DEBUGGING: Add a custom property to check if CSS is loaded */
+:root {
+    --swiper-custom-css-loaded: true;
+}
+
 /* Core Swiper Setup */
 .swiper {
     overflow: visible; /* Allow content to extend beyond container */
