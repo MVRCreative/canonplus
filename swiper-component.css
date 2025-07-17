@@ -1,35 +1,70 @@
 /* Swiper Component Styles - Functionality Only */
 
-/* Core Swiper Setup */
+/* Core Swiper Container */
 .swiper {
-    overflow: visible; /* Allow content to extend beyond container */
+    overflow: visible !important;
+    width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
+/* Wrapper - Use Webflow's flexbox gap */
 .swiper-wrapper {
-    /* Let Webflow handle ALL styling - only add smooth transitions */
-    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex !important;
+    gap: 1rem;
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    transform: translate3d(0, 0, 0) !important; /* Force hardware acceleration */
+    will-change: transform;
 }
 
-/* Essential Swiper Slide Properties - MINIMAL OVERRIDES */
+/* Base slide styles - High specificity to override Webflow */
+.swiper .swiper-slide,
+.swiper .swiper-slide.is--audiobook,
+.swiper .swiper-slide.is--category {
+    position: relative;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    width: auto;
+    height: auto;
+    margin: 0 !important; /* Remove Swiper's default margins */
+    transform: translateZ(0); /* Force GPU acceleration */
+}
+
+/* Ensure slides maintain proper dimensions */
+.swiper-slide > * {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Animation states */
 .swiper-slide {
-    /* ONLY essential Swiper functionality - let Webflow handle ALL styling */
-    flex-shrink: 0; /* Prevent slides from shrinking */
-    pointer-events: auto; /* Ensure interactions work */
-    
-    /* GSAP Animation Initial State */
     opacity: 1;
     transform: translateY(0);
-    margin-right: 0 !important; /* rely on flexbox gap defined in Webflow */
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Ensure specialised main slider variant doesn’t add its own margin */
-.swiper-slide.is-slider-main {
-    margin-right: 0 !important;
+/* Hover states - work with GSAP */
+.swiper-slide:hover {
+    z-index: 2; /* Ensure hovered items stay on top */
 }
 
-/* Prevent swiper interference with layout */
-.swiper {
-    isolation: isolate;
+/* Fix for combo class animations */
+.swiper-slide.is--audiobook,
+.swiper-slide.is--category {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Active slide state */
+.swiper-slide-active {
+    z-index: 1;
+}
+
+/* Prevent unwanted margins from Webflow */
+.w-dyn-list .swiper-wrapper {
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* Hide default Swiper navigation (use Webflow buttons instead) */
