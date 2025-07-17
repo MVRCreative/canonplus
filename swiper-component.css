@@ -6,19 +6,23 @@
 }
 
 .swiper-wrapper {
+    /* FORCE Webflow's flex layout and gap */
+    display: flex !important;
+    gap: 1.5rem !important;
     /* Let Webflow handle alignment and gaps */
     transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* Ensure we don't override Webflow's gap settings */
-    gap: inherit; 
 }
 
 /* Essential Swiper Slide Properties */
 .swiper-slide {
-    flex-shrink: 0; /* Prevent slides from shrinking */
+    /* FORCE Webflow's dimensions and layout */
+    width: 20rem !important;
+    height: 30rem !important;
+    flex-shrink: 0 !important; /* Prevent slides from shrinking */
     pointer-events: auto; /* Ensure interactions work */
     
-    /* Ensure no extra margins interfere with Webflow's 1.5rem gap */
-    margin: 0;
+    /* Ensure no extra margins interfere with Webflow's gap */
+    margin: 0 !important;
     
     /* GSAP Animation Initial State */
     opacity: 0;
