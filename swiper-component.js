@@ -1,4 +1,6 @@
-// Wait for both DOM and scripts to be ready
+// Swiper Component - Functionality Only
+// Let Webflow handle all sizing and spacing
+
 function initializeSwipers() {
     // Check if Swiper is available
     if (typeof Swiper === 'undefined') {
@@ -6,10 +8,7 @@ function initializeSwipers() {
         return;
     }
     
-    // Initialize all Swiper instances
     const swiperInstances = [];
-    
-    // Find all swiper containers
     const swiperContainers = document.querySelectorAll('.swiper');
     
     if (swiperContainers.length === 0) {
@@ -25,34 +24,35 @@ function initializeSwipers() {
             }
             
             const swiper = new Swiper(container, {
-                // Core settings - using 'auto' to respect your fixed widths
+                // Let Webflow control sizing - use 'auto' to respect your styles
                 slidesPerView: 'auto',
-                spaceBetween: 12,
+                spaceBetween: 0, // Let Webflow gaps handle spacing
+                
+                // Core functionality
                 loop: true,
                 loopAdditionalSlides: 2,
-                
-                // Ensure smooth looping
                 centeredSlides: false,
                 speed: 400,
                 
-                // Touch/drag settings for smooth interaction
+                // Touch/drag settings
                 touchRatio: 1,
                 touchAngle: 45,
                 grabCursor: true,
                 
-                // Enable free mode for smoother dragging
+                // Smooth dragging
                 freeMode: {
                     enabled: true,
                     sticky: true,
                     minimumVelocity: 0.02,
                 },
                 
-                // Optional controls
+                // Keyboard support
                 keyboard: {
                     enabled: true,
                     onlyInViewport: true,
                 },
                 
+                // Mouse wheel support
                 mousewheel: {
                     enabled: true,
                     forceToAxis: true,
@@ -60,30 +60,30 @@ function initializeSwipers() {
                     releaseOnEdges: true,
                 },
                 
-                // Prevent interference between swipers
+                // Progress tracking
                 watchSlidesProgress: true,
                 watchSlidesVisibility: true,
                 
-                // Add error handling
+                // Events
                 on: {
                     init: function() {
                         console.log(`Swiper ${containerIndex + 1} initialized successfully`);
-                        // Ensure slides are properly positioned
                         this.update();
                     },
+                    
+                    // Prevent multiple swiper conflicts
                     touchStart: function() {
-                        // Disable other swipers when this one is being touched
                         swiperInstances.forEach((otherSwiper, index) => {
-                            if (index !== containerIndex && otherSwiper && otherSwiper.allowTouchMove !== undefined) {
+                            if (index !== containerIndex && otherSwiper?.allowTouchMove !== undefined) {
                                 otherSwiper.allowTouchMove = false;
                             }
                         });
                     },
+                    
                     touchEnd: function() {
-                        // Re-enable all swipers after touch ends
                         setTimeout(() => {
                             swiperInstances.forEach((otherSwiper) => {
-                                if (otherSwiper && otherSwiper.allowTouchMove !== undefined) {
+                                if (otherSwiper?.allowTouchMove !== undefined) {
                                     otherSwiper.allowTouchMove = true;
                                 }
                             });
@@ -93,14 +93,14 @@ function initializeSwipers() {
             });
             
             swiperInstances.push(swiper);
+            
         } catch (error) {
             console.error(`Failed to initialize Swiper ${containerIndex + 1}:`, error);
         }
     });
 
-    // Enhanced GSAP Scroll-Triggered Animation
+    // GSAP Scroll Animations
     function setupScrollAnimations() {
-        // Check if GSAP is available
         if (typeof gsap === 'undefined') {
             console.warn('GSAP library not loaded. Animations will be skipped.');
             return;
@@ -117,10 +117,10 @@ function initializeSwipers() {
                     const container = entry.target;
                     const slides = container.querySelectorAll('.swiper-slide');
                     
-                    // Mark as animated to prevent re-animation
+                    // Mark as animated
                     container.setAttribute('data-animated', 'true');
                     
-                    // Clean and quick fade-in animation
+                    // Animate slides in
                     gsap.fromTo(slides, {
                         opacity: 0,
                         y: 30
@@ -135,27 +135,23 @@ function initializeSwipers() {
                         }
                     });
                     
-                    // Stop observing after animation
                     observer.unobserve(container);
                 }
             });
         }, observerOptions);
 
-        // Observe all swiper containers
         swiperContainers.forEach(container => {
             observer.observe(container);
         });
     }
 
-    // Setup animations after swipers are initialized
-    setTimeout(() => {
-        setupScrollAnimations();
-    }, 200);
+    // Initialize animations
+    setTimeout(setupScrollAnimations, 200);
 
-    // Handle resize
+    // Handle window resize
     window.addEventListener('resize', function() {
         swiperInstances.forEach(swiper => {
-            if (swiper && swiper.update) {
+            if (swiper?.update) {
                 swiper.update();
             }
         });
@@ -164,15 +160,13 @@ function initializeSwipers() {
     return swiperInstances;
 }
 
-// Multiple ways to ensure everything loads properly
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Small delay to ensure scripts are fully loaded
     setTimeout(initializeSwipers, 200);
 });
 
 // Backup initialization
 window.addEventListener('load', function() {
-    // Only initialize if not already done
     if (document.querySelectorAll('.swiper-initialized').length === 0) {
         initializeSwipers();
     }
