@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiper Debug Test</title>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+        
+        .test-title {
+            color: #00ff00;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        /* Import Webflow Variable */
+        :root {
+            --_primitives---colors--neutral-darker: #1b1b1b;
+        }
+        
+        /* TEST 1: Copy exact Webflow structure */
+        .test1 .swiper_section {
+            background-color: black;
+        }
+        
+        .test1 .review_wrapper {
+            border: 2px solid yellow;
+        }
+        
+        .test1 .swiper-wrapper {
+            display: flex;
+        }
+        
+        .test1 .swiper-slide.is-slider-main.reviews-small {
+            background-color: var(--_primitives---colors--neutral-darker);
+            border-radius: 1rem;
+            flex: 1;
+            justify-content: space-between;
+            width: 25%;
+            max-width: none;
+            height: 12rem;
+            min-height: 18rem;
+            max-height: none;
+            margin-right: 0;
+            padding: 1rem;
+            overflow: hidden;
+            border: 2px solid red; /* Debug border */
+        }
+        
+        /* TEST 2: Force logical dimensions */
+        .test2 .swiper_section {
+            background-color: black;
+        }
+        
+        .test2 .swiper,
+        .test2 .review_wrapper {
+            border: 2px solid lime;
+        }
+        
+        .test2 .swiper-wrapper {
+            display: flex !important;
+        }
+        
+        .test2 .swiper-slide.is-slider-main.reviews-small {
+            width: 300px !important;
+            height: 250px !important;
+            min-height: 250px !important;
+            max-height: none !important;
+            min-width: 300px !important;
+            max-width: none !important;
+            
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            
+            margin-right: 12px !important;
+            padding: 1.5rem !important;
+            
+            background-color: var(--_primitives---colors--neutral-darker) !important;
+            border-radius: 1rem !important;
+            border: 2px solid #00ff00 !important;
+            
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+        }
+        
+        /* TEST 3: Minimal working example */
+        .test3 .simple-slide {
+            width: 300px;
+            height: 200px;
+            background: #1b1b1b;
+            margin-right: 12px;
+            padding: 20px;
+            border-radius: 16px;
+            border: 2px solid cyan;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+        }
+        
+        .test3 .slide-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+        
+        /* Common content styles */
+        .review-block-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        
+        .review-headline {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+        
+        .text-color-blue {
+            color: #4f9cf9;
+        }
+        
+        .text-review {
+            color: white;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .review-attribution {
+            color: #737373;
+            font-size: 0.75rem;
+            margin: 0;
+        }
+        
+        .star_wrapper {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+        
+        .icon-embed-xxsmall {
+            width: 14px;
+            height: 14px;
+            color: #4f9cf9;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Swiper Debug Test</h1>
+    
+    <!-- TEST 1: Exact Webflow Structure (Should show problem) -->
+    <div class="test-section test1">
+        <div class="test-title">TEST 1: Exact Webflow Structure (Broken)</div>
+        <div class="swiper_section background-color-black">
+            <div class="review_wrapper">
+                <div class="swiper-wrapper is-reverse">
+                    <div class="swiper-slide is-slider-main reviews-small">
+                        <div class="review-block-center">
+                            <div class="card_top_row">
+                                <div class="star_wrapper">
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                </div>
+                                <div class="review-headline">"Every time I open the app, <span class="text-color-blue">it adds value to my family</span>"</div>
+                            </div>
+                            <div class="testimonial_credit">
+                                <p class="text-review">Josh S.</p>
+                                <div class="review-attribution">Subscriber</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide is-slider-main reviews-small">
+                        <div class="review-block-center">
+                            <div class="card_top_row">
+                                <div class="star_wrapper">
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                </div>
+                                <div class="review-headline">"One subscription <span class="text-color-blue">I don't regret</span>"</div>
+                            </div>
+                            <div class="testimonial_credit">
+                                <p class="text-review">Brock B</p>
+                                <div class="review-attribution">Subscriber</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p><strong>Expected:</strong> Should show tiny red boxes (the problem)</p>
+    </div>
+    
+    <!-- TEST 2: Force Fixed Dimensions -->
+    <div class="test-section test2">
+        <div class="test-title">TEST 2: Forced Dimensions (Fixed)</div>
+        <div class="swiper_section background-color-black">
+            <div class="review_wrapper swiper">
+                <div class="swiper-wrapper is-reverse">
+                    <div class="swiper-slide is-slider-main reviews-small">
+                        <div class="review-block-center">
+                            <div class="card_top_row">
+                                <div class="star_wrapper">
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                </div>
+                                <div class="review-headline">"Every time I open the app, <span class="text-color-blue">it adds value to my family</span>"</div>
+                            </div>
+                            <div class="testimonial_credit">
+                                <p class="text-review">Josh S.</p>
+                                <div class="review-attribution">Subscriber</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide is-slider-main reviews-small">
+                        <div class="review-block-center">
+                            <div class="card_top_row">
+                                <div class="star_wrapper">
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                </div>
+                                <div class="review-headline">"One subscription <span class="text-color-blue">I don't regret</span>"</div>
+                            </div>
+                            <div class="testimonial_credit">
+                                <p class="text-review">Brock B</p>
+                                <div class="review-attribution">Subscriber</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p><strong>Expected:</strong> Should show proper sized green boxes with content</p>
+    </div>
+    
+    <!-- TEST 3: Simple Working Example -->
+    <div class="test-section test3">
+        <div class="test-title">TEST 3: Simple Working Example</div>
+        <div class="slide-container">
+            <div class="simple-slide">
+                <div>
+                    <div class="star_wrapper">
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                    </div>
+                    <div class="review-headline">"Every time I open the app, <span class="text-color-blue">it adds value to my family</span>"</div>
+                </div>
+                <div>
+                    <p class="text-review">Josh S.</p>
+                    <div class="review-attribution">Subscriber</div>
+                </div>
+            </div>
+            <div class="simple-slide">
+                <div>
+                    <div class="star_wrapper">
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                    </div>
+                    <div class="review-headline">"One subscription <span class="text-color-blue">I don't regret</span>"</div>
+                </div>
+                <div>
+                    <p class="text-review">Brock B</p>
+                    <div class="review-attribution">Subscriber</div>
+                </div>
+            </div>
+        </div>
+        <p><strong>Expected:</strong> Should show perfect cyan boxes (this is our target)</p>
+    </div>
+    
+    <!-- Include custom CSS from file -->
+    <link rel="stylesheet" href="custom/swiper-component.css">
+    
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="custom/swiper-component.js"></script>
+    
+    <script>
+        // Additional debug info
+        console.log('🔍 Debug Test Loaded');
+        
+        // Check if our CSS is loaded
+        setTimeout(() => {
+            const testSlide = document.querySelector('.test2 .swiper-slide.is-slider-main.reviews-small');
+            if (testSlide) {
+                const styles = window.getComputedStyle(testSlide);
+                console.log('📏 Test 2 Slide Dimensions:', {
+                    width: styles.width,
+                    height: styles.height,
+                    minHeight: styles.minHeight,
+                    maxHeight: styles.maxHeight,
+                    display: styles.display,
+                    flex: styles.flex,
+                    border: styles.border
+                });
+            }
+        }, 1000);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,186 @@
+/* NUCLEAR OPTION - Maximum Specificity CSS Override */
+/* This file completely overrides Webflow styles with maximum force */
+
+/* Import Webflow CSS Variables */
+:root {
+    --_primitives---colors--neutral-darker: #1b1b1b;
+}
+
+/* NUCLEAR OVERRIDE: Force every possible selector combination */
+.swiper_section .review_wrapper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small,
+.swiper_section .swiper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small,
+.swiper-slide.is-slider-main.reviews-small,
+div.swiper_section div.review_wrapper div.swiper-wrapper div.swiper-slide.is-slider-main.reviews-small,
+div.swiper_section div.swiper div.swiper-wrapper div.swiper-slide.is-slider-main.reviews-small {
+    /* FORCE DIMENSIONS - Override impossible Webflow constraints */
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 400px !important;
+    height: auto !important;
+    min-height: 280px !important;
+    max-height: none !important;
+    
+    /* FORCE LAYOUT */
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    
+    /* FORCE SPACING */
+    margin: 0 12px 0 0 !important;
+    padding: 24px !important;
+    
+    /* FORCE VISIBILITY */
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    position: relative !important;
+    overflow: visible !important;
+    
+    /* FORCE STYLING */
+    background-color: var(--_primitives---colors--neutral-darker) !important;
+    border-radius: 16px !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    
+    /* FORCE CONTENT STYLING */
+    color: white !important;
+    font-family: inherit !important;
+}
+
+/* Force container behavior */
+.swiper_section .review_wrapper,
+.swiper_section .swiper {
+    overflow: visible !important;
+    width: 100% !important;
+    height: auto !important;
+}
+
+.swiper_section .review_wrapper .swiper-wrapper,
+.swiper_section .swiper .swiper-wrapper {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+}
+
+/* Force all content inside to be visible */
+.swiper-slide.is-slider-main.reviews-small *,
+.swiper-slide.is-slider-main.reviews-small *::before,
+.swiper-slide.is-slider-main.reviews-small *::after {
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: inherit !important;
+    display: block !important;
+}
+
+/* Specific content elements */
+.swiper-slide.is-slider-main.reviews-small .review-block-center {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.swiper-slide.is-slider-main.reviews-small .review-headline {
+    color: white !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    margin-bottom: 20px !important;
+    display: block !important;
+}
+
+.swiper-slide.is-slider-main.reviews-small .text-color-blue {
+    color: #4f9cf9 !important;
+}
+
+.swiper-slide.is-slider-main.reviews-small .text-review {
+    color: white !important;
+    font-size: 0.9rem !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+}
+
+.swiper-slide.is-slider-main.reviews-small .review-attribution {
+    color: #737373 !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+}
+
+.swiper-slide.is-slider-main.reviews-small .star_wrapper {
+    display: flex !important;
+    gap: 4px !important;
+    margin-bottom: 16px !important;
+}
+
+.swiper-slide.is-slider-main.reviews-small .icon-embed-xxsmall {
+    width: 16px !important;
+    height: 16px !important;
+    color: #4f9cf9 !important;
+    display: inline-block !important;
+}
+
+/* Responsive overrides with maximum specificity */
+@media screen and (max-width: 991px) {
+    .swiper_section .review_wrapper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small,
+    .swiper_section .swiper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small {
+        width: 280px !important;
+        min-width: 280px !important;
+        max-width: 350px !important;
+        min-height: 250px !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .swiper_section .review_wrapper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small,
+    .swiper_section .swiper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small {
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 320px !important;
+        min-height: 220px !important;
+        margin-right: 16px !important;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .swiper_section .review_wrapper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small,
+    .swiper_section .swiper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small {
+        width: 240px !important;
+        min-width: 240px !important;
+        max-width: 300px !important;
+        min-height: 200px !important;
+    }
+}
+
+/* Debug border (remove this when working) */
+.swiper-slide.is-slider-main.reviews-small {
+    border: 2px solid #ff0000 !important;
+}
+
+/* Additional insurance against Webflow interference */
+.swiper-slide.is-slider-main.reviews-small {
+    /* Reset any problematic CSS properties */
+    box-shadow: none !important;
+    outline: none !important;
+    z-index: auto !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    clip-path: none !important;
+    mask: none !important;
+    transform-origin: center center !important;
+    transform-style: flat !important;
+    perspective: none !important;
+    contain: none !important;
+    isolation: auto !important;
+    mix-blend-mode: normal !important;
+    will-change: auto !important;
+} 

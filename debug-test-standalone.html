@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiper Debug Test - Standalone</title>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- All CSS Inline -->
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+        
+        .test-title {
+            color: #00ff00;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        /* Import Webflow Variable */
+        :root {
+            --_primitives---colors--neutral-darker: #1b1b1b;
+        }
+        
+        /* TEST 1: Copy exact Webflow structure (BROKEN) */
+        .test1 .swiper_section {
+            background-color: black;
+            border: 2px solid orange;
+            padding: 20px;
+        }
+        
+        .test1 .review_wrapper {
+            border: 2px solid yellow;
+            padding: 10px;
+        }
+        
+        .test1 .swiper-wrapper {
+            display: flex;
+            border: 2px solid pink;
+        }
+        
+        /* This mimics Webflow's problematic CSS */
+        .test1 .swiper-slide.is-slider-main.reviews-small {
+            background-color: var(--_primitives---colors--neutral-darker);
+            border-radius: 1rem;
+            flex: 1;
+            justify-content: space-between;
+            width: 25%;
+            max-width: none;
+            height: 12rem;        /* ❌ CONFLICT */
+            min-height: 18rem;    /* ❌ IMPOSSIBLE! */
+            max-height: none;
+            margin-right: 0;
+            padding: 1rem;
+            overflow: hidden;
+            border: 2px solid red;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* TEST 2: NUCLEAR OVERRIDE (FIXED) */
+        .test2 .swiper_section {
+            background-color: black;
+            border: 2px solid lime;
+            padding: 20px;
+        }
+        
+        .test2 .swiper,
+        .test2 .review_wrapper {
+            border: 2px solid lime;
+            padding: 10px;
+        }
+        
+        .test2 .swiper-wrapper {
+            display: flex !important;
+            border: 2px solid cyan;
+            gap: 12px;
+        }
+        
+        /* NUCLEAR OVERRIDE with maximum specificity */
+        .test2 .swiper_section .review_wrapper .swiper-wrapper .swiper-slide.is-slider-main.reviews-small {
+            /* FORCE DIMENSIONS */
+            width: 300px !important;
+            min-width: 300px !important;
+            max-width: 400px !important;
+            height: auto !important;
+            min-height: 280px !important;
+            max-height: none !important;
+            
+            /* FORCE LAYOUT */
+            display: flex !important;
+            flex-direction: column !important;
+            flex: 0 0 auto !important;
+            justify-content: space-between !important;
+            
+            /* FORCE SPACING */
+            margin: 0 !important;
+            padding: 24px !important;
+            
+            /* FORCE VISIBILITY */
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+            overflow: visible !important;
+            
+            /* FORCE STYLING */
+            background-color: var(--_primitives---colors--neutral-darker) !important;
+            border-radius: 16px !important;
+            border: 2px solid #00ff00 !important;
+            box-sizing: border-box !important;
+            
+            /* FORCE CONTENT */
+            color: white !important;
+        }
+        
+        /* TEST 3: Simple working example */
+        .test3 .simple-slide {
+            width: 300px;
+            height: 250px;
+            background: #1b1b1b;
+            margin-right: 12px;
+            padding: 20px;
+            border-radius: 16px;
+            border: 2px solid cyan;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+            box-sizing: border-box;
+        }
+        
+        .test3 .slide-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 20px 0;
+            border: 2px solid purple;
+        }
+        
+        /* Common content styles */
+        .review-block-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        
+        .review-headline {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+        
+        .text-color-blue {
+            color: #4f9cf9;
+        }
+        
+        .text-review {
+            color: white;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .review-attribution {
+            color: #737373;
+            font-size: 0.75rem;
+            margin: 0;
+        }
+        
+        .star_wrapper {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+        
+        .icon-embed-xxsmall {
+            width: 14px;
+            height: 14px;
+            color: #4f9cf9;
+        }
+        
+        .testimonial_credit {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        /* Status indicators */
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .status.loading {
+            background: #333;
+            color: yellow;
+        }
+        
+        .status.success {
+            background: #1a4b3a;
+            color: #4ade80;
+        }
+        
+        .status.error {
+            background: #4b1a1a;
+            color: #f87171;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Swiper Debug Test - Standalone</h1>
+    
+    <div class="status loading" id="loadStatus">Loading dependencies...</div>
+    
+    <!-- TEST 1: Exact Webflow Structure (Should show problem) -->
+    <div class="test-section test1">
+        <div class="test-title">TEST 1: Exact Webflow Structure (Shows The Problem)</div>
+        <div class="swiper_section background-color-black">
+            <div class="review_wrapper">
+                <div class="swiper-wrapper is-reverse">
+                    <div class="swiper-slide is-slider-main reviews-small">
+                        <div class="review-block-center">
+                            <div class="card_top_row">
+                                <div class="star_wrapper">
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                </div>
+                                <div class="review-headline">"Every time I open the app, <span class="text-color-blue">it adds value to my family</span>"</div>
+                            </div>
+                            <div class="testimonial_credit">
+                                <p class="text-review">Josh S.</p>
+                                <div class="review-attribution">Subscriber</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide is-slider-main reviews-small">
+                        <div class="review-block-center">
+                            <div class="card_top_row">
+                                <div class="star_wrapper">
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                </div>
+                                <div class="review-headline">"One subscription <span class="text-color-blue">I don't regret</span>"</div>
+                            </div>
+                            <div class="testimonial_credit">
+                                <p class="text-review">Brock B</p>
+                                <div class="review-attribution">Subscriber</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p><strong>Expected:</strong> Tiny red boxes (height: 12rem + min-height: 18rem = impossible!)</p>
+        <p><strong>What you're seeing:</strong> <span id="test1-result">Checking...</span></p>
+    </div>
+    
+    <!-- TEST 2: Nuclear Override -->
+    <div class="test-section test2">
+        <div class="test-title">TEST 2: Nuclear CSS Override (The Fix)</div>
+        <div class="swiper_section background-color-black">
+            <div class="review_wrapper">
+                <div class="swiper-wrapper is-reverse">
+                    <div class="swiper-slide is-slider-main reviews-small">
+                        <div class="review-block-center">
+                            <div class="card_top_row">
+                                <div class="star_wrapper">
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                </div>
+                                <div class="review-headline">"Every time I open the app, <span class="text-color-blue">it adds value to my family</span>"</div>
+                            </div>
+                            <div class="testimonial_credit">
+                                <p class="text-review">Josh S.</p>
+                                <div class="review-attribution">Subscriber</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide is-slider-main reviews-small">
+                        <div class="review-block-center">
+                            <div class="card_top_row">
+                                <div class="star_wrapper">
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                    <div class="icon-embed-xxsmall">⭐</div>
+                                </div>
+                                <div class="review-headline">"One subscription <span class="text-color-blue">I don't regret</span>"</div>
+                            </div>
+                            <div class="testimonial_credit">
+                                <p class="text-review">Brock B</p>
+                                <div class="review-attribution">Subscriber</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p><strong>Expected:</strong> 300px wide green-bordered boxes with content</p>
+        <p><strong>What you're seeing:</strong> <span id="test2-result">Checking...</span></p>
+    </div>
+    
+    <!-- TEST 3: Perfect Simple Example -->
+    <div class="test-section test3">
+        <div class="test-title">TEST 3: Perfect Simple Example (Target Design)</div>
+        <div class="slide-container">
+            <div class="simple-slide">
+                <div>
+                    <div class="star_wrapper">
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                    </div>
+                    <div class="review-headline">"Every time I open the app, <span class="text-color-blue">it adds value to my family</span>"</div>
+                </div>
+                <div>
+                    <p class="text-review">Josh S.</p>
+                    <div class="review-attribution">Subscriber</div>
+                </div>
+            </div>
+            <div class="simple-slide">
+                <div>
+                    <div class="star_wrapper">
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                        <div class="icon-embed-xxsmall">⭐</div>
+                    </div>
+                    <div class="review-headline">"One subscription <span class="text-color-blue">I don't regret</span>"</div>
+                </div>
+                <div>
+                    <p class="text-review">Brock B</p>
+                    <div class="review-attribution">Subscriber</div>
+                </div>
+            </div>
+        </div>
+        <p><strong>Expected:</strong> Perfect 300px cyan-bordered boxes (this is our goal)</p>
+        <p><strong>What you're seeing:</strong> <span id="test3-result">Checking...</span></p>
+    </div>
+    
+    <!-- Diagnostic Info -->
+    <div class="test-section">
+        <div class="test-title">📊 Diagnostic Information</div>
+        <div id="diagnostics">
+            <p><strong>Browser:</strong> <span id="browser-info">Detecting...</span></p>
+            <p><strong>Screen Size:</strong> <span id="screen-info">Measuring...</span></p>
+            <p><strong>Swiper Library:</strong> <span id="swiper-status">Loading...</span></p>
+            <p><strong>CSS Variables:</strong> <span id="css-vars">Checking...</span></p>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Diagnostic function
+        function runDiagnostics() {
+            // Update load status
+            document.getElementById('loadStatus').className = 'status success';
+            document.getElementById('loadStatus').textContent = '✅ All dependencies loaded!';
+            
+            // Browser info
+            document.getElementById('browser-info').textContent = navigator.userAgent.split(' ').pop();
+            
+            // Screen info
+            document.getElementById('screen-info').textContent = window.innerWidth + 'x' + window.innerHeight;
+            
+            // Swiper status
+            document.getElementById('swiper-status').textContent = typeof Swiper !== 'undefined' ? '✅ Loaded' : '❌ Not loaded';
+            
+            // CSS Variables
+            const computedStyle = getComputedStyle(document.documentElement);
+            const cssVar = computedStyle.getPropertyValue('--_primitives---colors--neutral-darker').trim();
+            document.getElementById('css-vars').textContent = cssVar ? `✅ ${cssVar}` : '❌ Not found';
+            
+            // Test results
+            setTimeout(() => {
+                checkTestResults();
+            }, 500);
+        }
+        
+        function checkTestResults() {
+            // Test 1 - should show problem
+            const test1Slide = document.querySelector('.test1 .swiper-slide.is-slider-main.reviews-small');
+            if (test1Slide) {
+                const styles = getComputedStyle(test1Slide);
+                const width = parseInt(styles.width);
+                const height = parseInt(styles.height);
+                const minHeight = parseInt(styles.minHeight);
+                
+                if (width < 100 || height < 100) {
+                    document.getElementById('test1-result').innerHTML = '🔴 TINY BOXES (The Problem!) - Width: ' + width + 'px, Height: ' + height + 'px';
+                    document.getElementById('test1-result').style.color = '#f87171';
+                } else {
+                    document.getElementById('test1-result').innerHTML = '🟡 Unexpected size - Width: ' + width + 'px, Height: ' + height + 'px';
+                    document.getElementById('test1-result').style.color = '#fbbf24';
+                }
+            }
+            
+            // Test 2 - should be fixed
+            const test2Slide = document.querySelector('.test2 .swiper-slide.is-slider-main.reviews-small');
+            if (test2Slide) {
+                const styles = getComputedStyle(test2Slide);
+                const width = parseInt(styles.width);
+                const height = parseInt(styles.height);
+                
+                if (width >= 280 && height >= 200) {
+                    document.getElementById('test2-result').innerHTML = '🟢 FIXED! - Width: ' + width + 'px, Height: ' + height + 'px';
+                    document.getElementById('test2-result').style.color = '#4ade80';
+                } else {
+                    document.getElementById('test2-result').innerHTML = '🔴 Still broken - Width: ' + width + 'px, Height: ' + height + 'px';
+                    document.getElementById('test2-result').style.color = '#f87171';
+                }
+            }
+            
+            // Test 3 - should be perfect
+            const test3Slide = document.querySelector('.test3 .simple-slide');
+            if (test3Slide) {
+                const styles = getComputedStyle(test3Slide);
+                const width = parseInt(styles.width);
+                const height = parseInt(styles.height);
+                
+                document.getElementById('test3-result').innerHTML = '🟢 PERFECT - Width: ' + width + 'px, Height: ' + height + 'px';
+                document.getElementById('test3-result').style.color = '#4ade80';
+            }
+        }
+        
+        // Run diagnostics when page loads
+        window.addEventListener('load', runDiagnostics);
+        
+        // Fallback for faster loading
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(runDiagnostics, 1000);
+        });
+    </script>
+</body>
+</html> 
