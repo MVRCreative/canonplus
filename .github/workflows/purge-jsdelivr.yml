@@ -14,4 +14,9 @@ jobs:
           curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/swiper-component.css"
           curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/swiper-component.js"
           curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/custom/swiper-component.css"
-          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/custom/swiper-component.js" 
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/custom/swiper-component.js"
+          # Purge the @latest alias paths as well
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus@latest/swiper-component.css"
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus@latest/swiper-component.js"
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus@latest/custom/swiper-component.css"
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus@latest/custom/swiper-component.js" 
