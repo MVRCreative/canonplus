@@ -1,0 +1,17 @@
+name: Purge jsDelivr cache
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge jsDelivr cache for Swiper assets
+        run: |
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/swiper-component.css"
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/swiper-component.js"
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/custom/swiper-component.css"
+          curl -sS "https://purge.jsdelivr.net/gh/MVRCreative/canonplus/custom/swiper-component.js" 
