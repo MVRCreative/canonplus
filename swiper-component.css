@@ -15,9 +15,6 @@
 
 /* Essential Swiper Slide Properties */
 .swiper-slide {
-    /* FORCE Webflow's dimensions and layout */
-    width: 20rem !important;
-    height: 30rem !important;
     flex-shrink: 0 !important; /* Prevent slides from shrinking */
     pointer-events: auto; /* Ensure interactions work */
     
@@ -27,6 +24,18 @@
     /* GSAP Animation Initial State */
     opacity: 0;
     transform: translateY(50px);
+}
+
+/* ONLY apply large dimensions to main content slides (not categories) */
+.swiper-slide:not(.is--category) {
+    width: 20rem !important;
+    height: 30rem !important;
+}
+
+/* Let category slides use their natural Webflow dimensions */
+.swiper-slide.is--category {
+    width: auto !important;
+    height: auto !important;
 }
 
 /* Prevent swiper interference with layout */
