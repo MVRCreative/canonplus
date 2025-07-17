@@ -17,8 +17,14 @@
     pointer-events: auto; /* Ensure interactions work */
     
     /* GSAP Animation Initial State */
-    opacity: 0;
-    transform: translateY(50px);
+    opacity: 1;
+    transform: translateY(0);
+    margin-right: 0 !important; /* rely on flexbox gap defined in Webflow */
+}
+
+/* Ensure specialised main slider variant doesn’t add its own margin */
+.swiper-slide.is-slider-main {
+    margin-right: 0 !important;
 }
 
 /* Prevent swiper interference with layout */
